@@ -1,3 +1,4 @@
+// Função construtora e objetos
 function clientes(Nconta, Titular, TipoConta, Saldo) {
     return {
         Nconta: Nconta,
@@ -17,6 +18,7 @@ let cliente7 = clientes(185979521, 'Lonnie Verheijden', 'Conta Poupança', 25994
 let cliente8 = clientes(3151956165, 'Alonso Wannan', 'Conta Corrente', 7601);
 let cliente9 = clientes(2138105881, 'Bendite Huggett', 'Conta Poupança', 33196);
 
+// Funções do Banco
 let banco = {
     clientes: [
         cliente0,
@@ -30,16 +32,36 @@ let banco = {
         cliente8,
         cliente9,
     ],
-    consultarCliente(nTitular) {
+    consultarCliente(nomeTitular) {
         let clinteTemp;
         for (let i = 0; i < this.clientes.length; i++) {
-            if (this.clientes[i].Titular == nTitular) {
-                clinteTemp = this.clientes[i];
+            if (this.clientes[i].Titular == nomeTitular) {
+                return this.clientes[i];
             }
         }
-        return clinteTemp;
     },
-    depósito() {},
+    deposito(nomeTitular, deposito) {
+        this.consultarCliente(nomeTitular).Saldo += deposito;
+        console.log(
+            'Depósito realizado, seu novo saldo é:',
+            this.consultarCliente(nomeTitular).Saldo
+        );
+    },
+    saque(nomeTitular, valorExtracao) {
+        let saldo = this.consultarCliente(nomeTitular).Saldo;
+        if (saldo - valorExtracao < 0) {
+            console.log('Fundos insuficientes');
+        } else {
+            this.consultarCliente(nomeTitular).Saldo -= valorExtracao;
+            console.log(
+                `Extração feita com sucesso, seu novo saldo é: ${
+                    this.consultarCliente(nomeTitular).Saldo
+                }`
+            );
+        }
+    },
 };
 
 console.log(banco.consultarCliente('Abigael Natte'));
+banco.deposito('Jarret Lafuente', 200);
+banco.saque('Thomasin Latour', 200);
