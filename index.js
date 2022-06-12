@@ -33,7 +33,6 @@ let banco = {
         cliente9,
     ],
     consultarCliente(nomeTitular) {
-        let clinteTemp;
         for (let i = 0; i < this.clientes.length; i++) {
             if (this.clientes[i].Titular == nomeTitular) {
                 return this.clientes[i];
@@ -49,15 +48,15 @@ let banco = {
     },
     saque(nomeTitular, valorExtracao) {
         let saldo = this.consultarCliente(nomeTitular).Saldo;
-        if (saldo - valorExtracao < 0) {
-            console.log('Fundos insuficientes');
-        } else {
+        if (saldo - valorExtracao >= 0) {
             this.consultarCliente(nomeTitular).Saldo -= valorExtracao;
             console.log(
                 `Extração feita com sucesso, seu novo saldo é: ${
                     this.consultarCliente(nomeTitular).Saldo
                 }`
             );
+        } else {
+            console.log('Fundos insuficientes');
         }
     },
 };
